@@ -22,6 +22,28 @@ db.init_app(app)
 def home():
     return render_template("home.html")
 
+@app.route("/seed_categories")
+def seed_categories():
+
+    if Category.query.count() == 0:
+        categories = [
+            "Catering",
+            "Florist",
+            "Decoration",
+            "Lighting",
+            "Photography",
+            "Music & DJ",
+            "Venue Booking",
+            "Makeup & Styling"
+        ]
+
+        for c in categories:
+            db.session.add(Category(name=c))
+
+        db.session.commit()
+
+    return "Categories Seeded"
+
 # Authentication Routes
 @app.route("/login", methods=["GET", "POST"])
 def login():
