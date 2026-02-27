@@ -645,7 +645,7 @@ with app.app_context():
         db.session.commit()
         print("Admin user created.")
 
-    app.run(debug=True)
+    app.run(host="0.0.0.0", port=5000)
 
 # Sample vendor and user data (commented out)
 #Vendor = Vendor(
@@ -684,9 +684,3 @@ with app.app_context():
 #            category="Decoration"
 #        )
 
-#User = User(
-#            name="Anuj Mundu",
-#            email="anujmark.edwin.ame@gmail.com",
-#            password="1234567890",
-#            role="user"
-#        )
