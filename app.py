@@ -18,11 +18,6 @@ db.init_app(app)
 def home():
     return render_template("home.html")
 
-@app.route("/initdb")
-def initdb():
-    db.create_all()
-    return "Database initialized successfully"
-
 # Authentication Routes
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -619,25 +614,21 @@ def logout():
     session.clear()
     return redirect("/login")
 
-# Database & Application Initialization
-if __name__ == "__main__":
-    with app.app_context():
-        db.create_all()
-        categories = [
-            "Catering","Florist","Decoration","Lighting",
-            "Photography","Music & DJ","Venue Booking","Makeup & Styling"
-        ]
-
-        for c in categories:
-            if not Category.query.filter_by(name=c).first():
-                db.session.add(Category(name=c))
-
-        db.session.commit()
-
-        print("Database created successfully.")
-
-# Seed default admin user
+# --- Database initialization (runs on startup) ---
 with app.app_context():
+    db.create_all()
+
+    # seed categories
+    categories = [
+        "Catering","Florist","Decoration","Lighting",
+        "Photography","Music & DJ","Venue Booking","Makeup & Styling"
+    ]
+
+    for c in categories:
+        if not Category.query.filter_by(name=c).first():
+            db.session.add(Category(name=c))
+
+    # seed admin user
     if not User.query.filter_by(email="admin@erp.com").first():
         admin = User(
             name="Admin",
@@ -645,47 +636,11 @@ with app.app_context():
             password="admin123",
             role="admin"
         )
-        
         db.session.add(admin)
-        db.session.commit()
-        print("Admin user created.")
 
+    db.session.commit()
+
+
+# Run locally only
+if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
-
-# Sample vendor and user data (commented out)
-#Vendor = Vendor(
-#            name="VendorWave",
-#            email="vendorwave@erp.com",
-#            password="vendorwave123",
-#            category="Catering"
-#        )
-
-
-#Vendor = Vendor(
-#            name="VendorPulse",
-#            email="vendorpulse@erp.com",
-#            password="vendorpulse123",
-#            category="CateringFlorist"
-#        )
-
-#Vendor = Vendor(
-#            name="VendorFlow",
-#            email="vendorflow@erp.com",
-#            password="vendorflow123",
-#            category="Florist"
-#        )
-
-#Vendor = Vendor(
-#            name="VendSpark",
-#            email="vendorspark@erp.com",
-#            password="vendorspark123",
-#            category="Lighting"
-#        )
-
-#Vendor = Vendor(
-#            name="VendorVerse",
-#            email="vendorverse@erp.com",
-#            password="vendorverse123",
-#            category="Decoration"
-#        )
-
