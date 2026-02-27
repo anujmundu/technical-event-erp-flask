@@ -17,9 +17,6 @@ app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///" + os.path.join(BASE_DIR, "d
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db.init_app(app)
-from models import *
-with app.app_context():
-    db.create_all()
 
 @app.route("/")
 def home():
@@ -258,7 +255,10 @@ def maintain_vendor():
     vendors = Vendor.query.all()
 
     return render_template(
-        "admin/maintain_vendor.html", vendors=vendors)
+        "admin/maintain_vendor.html",
+        vendors=vendors,
+        categories=categories
+    )
 
 @app.route("/admin/edit_vendor/<int:vendor_id>", methods=["GET","POST"])
 @login_required
@@ -626,14 +626,22 @@ with app.app_context():
     db.create_all()
 
     # seed categories
-    categories = [
-        "Catering","Florist","Decoration","Lighting",
-        "Photography","Music & DJ","Venue Booking","Makeup & Styling"
-    ]
-
-    for c in categories:
-        if not Category.query.filter_by(name=c).first():
+    if Category.query.count() == 0:
+        categories = [
+            "Catering",
+            "Florist",
+            "Decoration",
+            "Lighting",
+            "Photography",
+            "Music & DJ",
+            "Venue Booking",
+            "Makeup & Styling"
+        ]
+        
+        for c in categories:
             db.session.add(Category(name=c))
+
+        db.session.commit()
 
     # seed admin user
     if not User.query.filter_by(email="admin@erp.com").first():
@@ -644,8 +652,7 @@ with app.app_context():
             role="admin"
         )
         db.session.add(admin)
-
-    db.session.commit()
+        db.session.commit()
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
