@@ -18,6 +18,11 @@ db.init_app(app)
 def home():
     return render_template("home.html")
 
+@app.route("/initdb")
+def initdb():
+    db.create_all()
+    return "Database initialized successfully"
+
 # Authentication Routes
 @app.route("/login", methods=["GET", "POST"])
 def login():
