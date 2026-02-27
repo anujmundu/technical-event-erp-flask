@@ -4,12 +4,16 @@ from flask import render_template, request, redirect, session, url_for
 from models import User, Vendor, Product, Membership, Category, Cart, Order, OrderItem
 from auth_utils import login_required, role_required
 from datetime import datetime, timedelta
+import os
 
 app = Flask(__name__)
 
 # Configuration
 app.config['SECRET_KEY'] = 'erp_secret_key'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
+
+BASE_DIR = os.path.abspath(os.path.dirname(__file__))
+
+app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///" + os.path.join(BASE_DIR, "database.db")
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db.init_app(app)
