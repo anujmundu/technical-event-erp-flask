@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}Membership Management{% endblock %}
+{% block content %}
+<h2>Membership Management</h2>
+<div class="card mb-4">
+    <div class="card-body">
+        <form method="POST" class="row g-3 align-items-end">
+            <div class="col-md-4">
+                <label class="form-label">Duration:</label>
+                <select name="duration" class="form-select" required>
+                    <option value="6 months" selected>6 Months</option>
+                    <option value="1 year">1 Year</option>
+                    <option value="2 years">2 Years</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-primary">Add Membership</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<h3>Existing Memberships</h3>
+{% if memberships %}
+    <ul class="list-group">
+    {% for m in memberships %}
+        {% set expired = m.end_date < now %}
+        <li class="list-group-item d-flex justify-content-between align-items-center {% if expired %}list-group-item-danger{% endif %}">
+            <span>ID: {{m.id}} | Duration: {{m.duration}} | Ends: {{m.end_date.strftime('%Y-%m-%d')}}</span>
+            <a class="btn btn-sm btn-danger" href="/admin/delete_membership/{{m.id}}" onclick="return confirm('Delete this membership?')">Delete</a>
+        </li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No memberships available.</p>
+{% endif %}
+
+<div class="mt-4">
+    <a class="btn btn-secondary" href="/admin/dashboard">Back</a>
+</div>
+{% endblock %}

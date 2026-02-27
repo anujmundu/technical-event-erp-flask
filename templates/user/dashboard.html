@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}User Dashboard{% endblock %}
+{% block content %}
+<h2>User Portal</h2>
+<div class="list-group mb-4">
+    <a class="list-group-item list-group-item-action" href="/user/vendors">Browse Vendors</a>
+    <a class="list-group-item list-group-item-action" href="/user/cart">Cart</a>
+    <a class="list-group-item list-group-item-action" href="/user/orders">Order Status</a>
+</div>
+<a class="btn btn-secondary" href="/logout">Logout</a>
+{% endblock %}

@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% block title %}Maintain Users{% endblock %}
+{% block content %}
+<h2>Maintain Users</h2>
+
+<div class="card mb-4">
+    <div class="card-body">
+        <h3>Add User</h3>
+        <form method="POST" class="row g-3">
+            <div class="col-md-4">
+                <input type="text" name="name" class="form-control" placeholder="Name" required>
+            </div>
+            <div class="col-md-4">
+                <input type="email" name="email" class="form-control" placeholder="Email" required>
+            </div>
+            <div class="col-md-4">
+                <input type="password" name="password" class="form-control" placeholder="Password" required>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label">Membership:</label>
+                <select name="membership_id" class="form-select" required>
+                    {% for m in memberships %}
+                    <option value="{{m.id}}">
+                        {{m.duration}} (ID {{m.id}})
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-12">
+                <button type="submit" class="btn btn-primary">Add User</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<h3>Existing Users</h3>
+{% if users %}
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th><th>Name</th><th>Email</th><th>Membership</th><th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for u in users %}
+            <tr>
+                <td>{{u.id}}</td>
+                <td>{{u.name}}</td>
+                <td>{{u.email}}</td>
+                <td>{{u.membership_id}}</td>
+                <td>
+                    <form method="POST" action="/admin/update_user_membership/{{u.id}}" class="d-inline">
+                        <select name="membership_id" class="form-select form-select-sm d-inline w-auto">
+                            {% for m in memberships %}
+                                <option value="{{m.id}}" {% if m.id == u.membership_id %}selected{% endif %}>
+                                    {{m.duration}} (ID {{m.id}})
+                                </option>
+                            {% endfor %}
+                        </select>
+                        <button type="submit" class="btn btn-sm btn-secondary">Update</button>
+                    </form>
+                    <a class="btn btn-sm btn-info" href="/admin/edit_user/{{u.id}}">Edit</a>
+                    <a class="btn btn-sm btn-danger" href="/admin/delete_user/{{u.id}}" onclick="return confirm('Delete this user?')">Delete</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>No users available.</p>
+{% endif %}
+
+<div class="mt-4">
+    <a class="btn btn-secondary" href="/admin/dashboard">Back</a>
+</div>
+{% endblock %}

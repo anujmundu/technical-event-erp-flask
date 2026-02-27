@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Your Cart{% endblock %}
+{% block content %}
+<h2>Your Cart</h2>
+{% if items %}
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Product</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Total</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for item in items %}
+        <tr>
+            <td>{{item.product.name}}</td>
+            <td>₹{{item.product.price}}</td>
+            <td>
+                <a class="btn btn-sm btn-outline-secondary" href="/user/decrease/{{item.id}}">-</a>
+                {{item.quantity}}
+                <a class="btn btn-sm btn-outline-secondary" href="/user/increase/{{item.id}}">+</a>
+            </td>
+            <td>₹{{item.product.price * item.quantity}}</td>
+            <td><a class="btn btn-sm btn-danger" href="/user/remove/{{item.id}}">Remove</a></td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+<h3>Grand Total: ₹{{grand_total}}</h3>
+<a class="btn btn-success" href="/user/checkout">Proceed to Checkout</a>
+{% else %}
+<p>Cart is empty</p>
+{% endif %}
+<div class="mt-4">
+    <a class="btn btn-secondary" href="/user/dashboard">Back</a>
+</div>
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Vendor Orders{% endblock %}
+{% block content %}
+<h2>Vendor Orders</h2>
+{% if orders %}
+    {% for order in orders %}
+    <div class="card mb-3">
+        <div class="card-body">
+            <p><strong>Order ID:</strong> {{order.id}} | <strong>Status:</strong> {{order.status}}</p>
+            <form method="POST" action="/vendor/update_status/{{order.id}}" class="row g-2 align-items-center">
+                <div class="col-auto">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="status" value="Received" required>
+                        <label class="form-check-label">Received</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="status" value="Ready for Shipping">
+                        <label class="form-check-label">Ready for Shipping</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="status" value="Out for Delivery">
+                        <label class="form-check-label">Out for Delivery</label>
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-sm btn-primary">Update</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    {% endfor %}
+{% else %}
+<p>No orders available.</p>
+{% endif %}
+<div class="mt-4">
+    <a class="btn btn-secondary" href="/vendor/dashboard">Back</a>
+</div>
+{% endblock %}

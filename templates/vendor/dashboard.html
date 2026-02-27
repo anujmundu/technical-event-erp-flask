@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}Vendor Dashboard{% endblock %}
+{% block content %}
+<h2>Vendor Dashboard</h2>
+<div class="list-group mb-4">
+    <a class="list-group-item list-group-item-action" href="/vendor/add_item">Add New Item</a>
+    <a class="list-group-item list-group-item-action" href="/vendor/items">Your Items</a>
+    <a class="list-group-item list-group-item-action" href="/vendor/orders">Orders</a>
+</div>
+<a class="btn btn-secondary" href="/logout">Logout</a>
+{% endblock %}

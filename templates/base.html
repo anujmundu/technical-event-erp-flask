@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Event ERP{% endblock %}</title>
+
+    <!-- CoreUI CSS (includes Bootstrap) -->
+    <link href="https://cdn.jsdelivr.net/npm/@coreui/coreui@4.2.0/dist/css/coreui.min.css" rel="stylesheet">
+    {% block extra_css %}{% endblock %}
+</head>
+<body class="c-app">
+
+<nav class="c-navbar c-navbar-light bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/">Event ERP</a>
+        <ul class="navbar-nav ms-auto">
+            {% if session.role %}
+                {% if session.role == 'admin' %}
+                    <li class="nav-item"><a class="nav-link" href="/admin/dashboard">Dashboard</a></li>
+                {% elif session.role == 'vendor' %}
+                    <li class="nav-item"><a class="nav-link" href="/vendor/dashboard">Dashboard</a></li>
+                {% elif session.role == 'user' %}
+                    <li class="nav-item"><a class="nav-link" href="/user/dashboard">Dashboard</a></li>
+                {% endif %}
+                <li class="nav-item"><a class="nav-link" href="/logout">Logout</a></li>
+            {% else %}
+                <li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
+                <li class="nav-item"><a class="nav-link" href="/signup">Signup</a></li>
+            {% endif %}
+        </ul>
+    </div>
+</nav>
+
+<main class="c-main mt-4">
+    <div class="container">
+        {% block content %}{% endblock %}
+    </div>
+</main>
+
+<!-- CoreUI and dependencies -->
+<script src="https://cdn.jsdelivr.net/npm/@coreui/coreui@4.2.0/dist/js/coreui.bundle.min.js"></script>
+{% block extra_js %}{% endblock %}
+</body>
+</html>

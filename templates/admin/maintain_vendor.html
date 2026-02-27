@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block title %}Maintain Vendors{% endblock %}
+{% block content %}
+<h2>Maintain Vendors</h2>
+<div class="card mb-4">
+    <div class="card-body">
+        <h3>Add Vendor</h3>
+        <form method="POST" class="row g-3">
+            <div class="col-md-4">
+                <input type="text" name="name" class="form-control" placeholder="Vendor Name" required>
+            </div>
+            <div class="col-md-4">
+                <input type="email" name="email" class="form-control" placeholder="Email" required>
+            </div>
+            <div class="col-md-4">
+                <input type="password" name="password" class="form-control" placeholder="Password" required>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label">Category:</label>
+                <select name="category" class="form-select" required>
+                    {% for c in categories %}
+                    <option value="{{c.name}}">{{c.name}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-12">
+                <button type="submit" class="btn btn-primary">Add Vendor</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<h3>Existing Vendors</h3>
+{% if vendors %}
+<table class="table table-striped">
+    <thead>
+        <tr><th>ID</th><th>Name</th><th>Category</th><th>Email</th><th>Actions</th></tr>
+    </thead>
+    <tbody>
+    {% for v in vendors %}
+        <tr>
+            <td>{{v.id}}</td>
+            <td>{{v.name}}</td>
+            <td>{{v.category}}</td>
+            <td>{{v.email}}</td>
+            <td>
+                <a class="btn btn-sm btn-info" href="/admin/edit_vendor/{{v.id}}" onclick="return confirm('Edit this vendor?')">Edit</a>
+                <a class="btn btn-sm btn-danger" href="/admin/delete_vendor/{{v.id}}" onclick="return confirm('Delete this vendor?')">Delete</a>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>No vendors available.</p>
+{% endif %}
+<div class="mt-4">
+    <a class="btn btn-secondary" href="/admin/dashboard">Back</a>
+</div>
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Your Items{% endblock %}
+{% block content %}
+<h2>Your Items</h2>
+{% if items %}
+<div class="list-group">
+    {% for item in items %}
+    <div class="list-group-item">
+        ID: {{item.id}} | {{item.name}} | ₹{{item.price}}
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<p>No items available.</p>
+{% endif %}
+<div class="mt-4">
+    <a class="btn btn-secondary" href="/vendor/dashboard">Back</a>
+</div>
+{% endblock %}
