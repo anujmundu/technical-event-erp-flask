@@ -213,21 +213,18 @@ def maintain_user():
         memberships=memberships
     )
 
-@app.route("/admin/edit_user/<int:user_id>", methods=["GET","POST"])
-@login_required
-@role_required("admin")
-def edit_user(user_id):
-
-    user = User.query.get(user_id)
+@app.route("/admin/edit_user/<int:id>", methods=["GET","POST"])
+def edit_user(id):
+    user = User.query.get_or_404(id)
     memberships = Membership.query.all()
 
     if request.method == "POST":
         user.name = request.form["name"]
         user.email = request.form["email"]
-        user.membership_id = request.form["membership_id"]
+        user.membership_id = request.form.get("membership_id")
 
         db.session.commit()
-        return redirect(url_for("maintain_user"))
+        return redirect("/admin/maintain_user")
 
     return render_template(
         "admin/edit_user.html",
