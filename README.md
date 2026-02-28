@@ -138,6 +138,27 @@ All templates extend `base.html` which pulls in CoreUI (v4) from CDN. Custom pag
 - Replace SQLite with another database by changing `SQLALCHEMY_DATABASE_URI`.
 - Enhance forms with validation or file uploads as needed.
 
+## Application Screenshots
+
+The following screenshots demonstrate the complete ERP workflow across Admin, Vendor, and User roles running on the live deployment.
+
+| Module | Preview |
+|---|---|
+| Home Page | ![](screenshots/01_home_page.png) |
+| Admin Dashboard | ![](screenshots/02_admin_dashboard.png) |
+| Membership Management | ![](screenshots/03_membership_management.png) |
+| Maintain Users | ![](screenshots/04_maintain_users.png) |
+| Maintain Vendors | ![](screenshots/05_maintain_vendors.png) |
+| Vendor Dashboard | ![](screenshots/06_vendor_dashboard.png) |
+| Vendor Items | ![](screenshots/07_vendor_items.png) |
+| Vendor Selection | ![](screenshots/08_vendor_selection.png) |
+| Product Listing | ![](screenshots/09_product_listing.png) |
+| Cart | ![](screenshots/10_cart_page.png) |
+| Checkout Success | ![](screenshots/11_checkout_success.png) |
+| User Orders | ![](screenshots/12_user_orders.png) |
+| Vendor Order Management | ![](screenshots/13_vendor_orders.png) |
+| Live Deployment | ![](screenshots/14_live_deployment.png) |
+
 ## Setup Instructions
 
 ### 1. Clone Repository
