@@ -1,5 +1,10 @@
 # Technical Event Management ERP System
 
+# Technical Event ERP System
+
+🔗 **Live Application:**  
+https://technical-event-erp-flask.onrender.com
+
 ![Python](https://img.shields.io/badge/Python-3.x-blue)
 ![Flask](https://img.shields.io/badge/Flask-Web%20Framework-black)
 ![ERP](https://img.shields.io/badge/Project-ERP%20System-green)
@@ -137,6 +142,26 @@ All templates extend `base.html` which pulls in CoreUI (v4) from CDN. Custom pag
 - Add more categories in `app.py` or manage via admin.
 - Replace SQLite with another database by changing `SQLALCHEMY_DATABASE_URI`.
 - Enhance forms with validation or file uploads as needed.
+
+## Live Deployment
+
+The application is deployed on Render and accessible at:
+
+👉 https://technical-event-erp-flask.onrender.com
+
+### Test Accounts
+
+**Admin**
+- Email: admin@erp.com
+- Password: admin123
+
+**Vendor**
+- Email: vendorwave@erp.com
+- Password: vendor123
+
+**User**
+- Email: user@erp.com
+- Password: user123
 
 ## Application Screenshots
 
