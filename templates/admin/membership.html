@@ -24,10 +24,14 @@
 {% if memberships %}
     <ul class="list-group">
     {% for m in memberships %}
-        {% set expired = m.end_date < now %}
-        <li class="list-group-item d-flex justify-content-between align-items-center {% if expired %}list-group-item-danger{% endif %}">
-            <span>ID: {{m.id}} | Duration: {{m.duration}} | Ends: {{m.end_date.strftime('%Y-%m-%d')}}</span>
-            <a class="btn btn-sm btn-danger" href="/admin/delete_membership/{{m.id}}" onclick="return confirm('Delete this membership?')">Delete</a>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            <span>ID: {{m.id}} | Duration: {{m.duration}}</span>
+
+            <a class="btn btn-sm btn-danger"
+            href="/admin/delete_membership/{{m.id}}"
+            onclick="return confirm('Delete this membership?')">
+            Delete
+            </a>
         </li>
     {% endfor %}
     </ul>

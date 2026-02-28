@@ -13,11 +13,13 @@
     </div>
     <div class="col-md-6">
         <label class="form-label">Membership</label>
-        <select name="membership_id" class="form-select">
+        <select name="membership_id" class="form-control">
+            <option value="">No Membership</option>
+
             {% for m in memberships %}
-            <option value="{{m.id}}" {% if m.id == user.membership_id %}selected{% endif %}>
-                {{m.duration}}
-            </option>
+                <option value="{{ m.id }}" {% if user.membership_id == m.id %}selected{% endif %}>
+                    {{ m.duration }}
+                </option>
             {% endfor %}
         </select>
     </div>

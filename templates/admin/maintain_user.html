@@ -18,7 +18,8 @@
             </div>
             <div class="col-md-4">
                 <label class="form-label">Membership:</label>
-                <select name="membership_id" class="form-select" required>
+                <select name="membership_id" class="form-select">
+                    <option value="">No Membership</option>
                     {% for m in memberships %}
                     <option value="{{m.id}}">
                         {{m.duration}} (ID {{m.id}})
@@ -51,6 +52,7 @@
                 <td>
                     <form method="POST" action="/admin/update_user_membership/{{u.id}}" class="d-inline">
                         <select name="membership_id" class="form-select form-select-sm d-inline w-auto">
+                            <option value="" {% if not u.membership_id %}selected{% endif %}>No Membership</option>
                             {% for m in memberships %}
                                 <option value="{{m.id}}" {% if m.id == u.membership_id %}selected{% endif %}>
                                     {{m.duration}} (ID {{m.id}})

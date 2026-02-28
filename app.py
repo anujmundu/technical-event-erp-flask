@@ -136,8 +136,7 @@ def membership():
 
     return render_template(
         "admin/membership.html",
-        memberships=memberships,
-        now=datetime.utcnow()
+        memberships=memberships
     )
 
 @app.route("/admin/update_user_membership/<int:user_id>", methods=["POST"])
@@ -150,8 +149,15 @@ def update_user_membership(user_id):
     if not user:
         return redirect(url_for("maintain_user"))
 
-    new_membership = request.form["membership_id"]
-    user.membership_id = new_membership
+    # membership_id may be empty (no membership selected)
+    new_membership = request.form.get("membership_id")
+    if new_membership:
+        try:
+            user.membership_id = int(new_membership)
+        except ValueError:
+            user.membership_id = None
+    else:
+        user.membership_id = None
 
     db.session.commit()
 
@@ -189,7 +195,15 @@ def maintain_user():
         name = request.form["name"]
         email = request.form["email"]
         password = request.form["password"]
-        membership_id = request.form["membership_id"]
+        # membership_id may be omitted or empty; treat as None
+        membership_id = request.form.get("membership_id")
+        if membership_id:
+            try:
+                membership_id = int(membership_id)
+            except ValueError:
+                membership_id = None
+        else:
+            membership_id = None
 
         new_user = User(
             name=name,
@@ -204,7 +218,7 @@ def maintain_user():
 
         return redirect(url_for("maintain_user"))
 
-    users = User.query.filter_by(role="user").all()
+    users = User.query.all()
     memberships = Membership.query.all()
 
     return render_template(
